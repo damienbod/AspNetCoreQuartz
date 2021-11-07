@@ -14,20 +14,13 @@ namespace AspNetCoreQuartz.QuartzServices
             _logger = logger;
         }
 
-        public async Task Execute(IJobExecutionContext context)
-        {
-            await DoWork();
-            return;
-        }
-
-        public async Task DoWork()
+        public Task Execute(IJobExecutionContext context)
         {
             var count = _counter++;
             _logger.LogInformation($"NonConconcurrentJob Job BEGIN {count} {DateTime.UtcNow}");
-            await Task.Delay(10);
+            Thread.Sleep(7000);
             _logger.LogInformation($"NonConconcurrentJob Job END {count} {DateTime.UtcNow}");
-
-            return;
+            return Task.CompletedTask;
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreQuartz.QuartzServices
 {
-    [DisallowConcurrentExecution]
     public class ConconcurrentJob : IJob
     {
         private readonly ILogger<ConconcurrentJob> _logger;
@@ -18,7 +17,7 @@ namespace AspNetCoreQuartz.QuartzServices
         {
             var count = _counter++;
             _logger.LogInformation($"Conconcurrent Job BEGIN {count} {DateTime.UtcNow}");
-            Thread.Sleep(7);
+            Thread.Sleep(7000);
             _logger.LogInformation($"Conconcurrent Job END {count} {DateTime.UtcNow}");
 
             return Task.CompletedTask;

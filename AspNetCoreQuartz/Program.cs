@@ -16,16 +16,14 @@ builder.Services.AddQuartz(q =>
     //    .WithIdentity("ConconcurrentJob-trigger")
     //    .WithCronSchedule("0/4 * * * * ?"));
 
-    //var conconcurrentJobKey = new JobKey("ConconcurrentJob");
-    //q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
-    //q.AddTrigger(opts => opts
-    //    .ForJob(conconcurrentJobKey)
-    //    .WithIdentity("ConconcurrentJob-trigger")
-    //    .WithSimpleSchedule(x => x
-    //        .WithIntervalInSeconds(5)
-    //        .RepeatForever()));
-
-
+    var conconcurrentJobKey = new JobKey("ConconcurrentJob");
+    q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(conconcurrentJobKey)
+        .WithIdentity("ConconcurrentJob-trigger")
+        .WithSimpleSchedule(x => x
+            .WithIntervalInSeconds(5)
+            .RepeatForever()));
 
     //var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
     //q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
@@ -34,14 +32,14 @@ builder.Services.AddQuartz(q =>
     //    .WithIdentity("NonConconcurrentJob-trigger")
     //    .WithCronSchedule("0/4 * * * * ?"));
 
-    var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
-    q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
-    q.AddTrigger(opts => opts
-        .ForJob(nonConconcurrentJobKey)
-        .WithIdentity("NonConconcurrentJob-trigger")
-        .WithSimpleSchedule(x => x
-            .WithIntervalInSeconds(5)
-            .RepeatForever()));
+    //var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
+    //q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
+    //q.AddTrigger(opts => opts
+    //    .ForJob(nonConconcurrentJobKey)
+    //    .WithIdentity("NonConconcurrentJob-trigger")
+    //    .WithSimpleSchedule(x => x
+    //        .WithIntervalInSeconds(5)
+    //        .RepeatForever()));
 
 });
 
