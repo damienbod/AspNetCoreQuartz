@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
 using Quartz;
-using System.Threading.Tasks;
 
 namespace AspNetCoreQuartz.QuartzServices
 {
@@ -34,6 +32,3 @@ namespace AspNetCoreQuartz.QuartzServices
         }
     }
 }
-
-
-
