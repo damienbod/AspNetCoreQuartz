@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Quartz;
 using System.Threading.Tasks;
 
@@ -8,19 +9,29 @@ namespace AspNetCoreQuartz.QuartzServices
     public class NonConconcurrentJob : IJob
     {
         private readonly ILogger<NonConconcurrentJob> _logger;
-        private static int _counter = 0;    
-        public NonConconcurrentJob(ILogger<NonConconcurrentJob> logger)
+        private static int _counter = 0;
+        private readonly IHubContext<JobsHub> _hubContext;
+
+        public NonConconcurrentJob(ILogger<NonConconcurrentJob> logger,
+               IHubContext<JobsHub> hubContext)
         {
             _logger = logger;
+            _hubContext = hubContext;
         }
 
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             var count = _counter++;
-            _logger.LogInformation($"NonConconcurrentJob Job BEGIN {count} {DateTime.UtcNow}");
+
+            var beginMessage = $"NonConconcurrentJob Job BEGIN {count} {DateTime.UtcNow}";
+            await _hubContext.Clients.All.SendAsync("JobInfo", beginMessage);
+            _logger.LogInformation(beginMessage);
+
             Thread.Sleep(7000);
-            _logger.LogInformation($"NonConconcurrentJob Job END {count} {DateTime.UtcNow}");
-            return Task.CompletedTask;
+
+            var endMessage = $"NonConconcurrentJob Job END {count} {DateTime.UtcNow}";
+            await _hubContext.Clients.All.SendAsync("JobInfo", endMessage);
+            _logger.LogInformation(endMessage);
         }
     }
 }

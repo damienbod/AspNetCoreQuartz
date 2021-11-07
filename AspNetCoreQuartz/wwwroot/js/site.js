@@ -1,4 +1,28 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/jobshub")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
-// Write your JavaScript code.
+async function start() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
+};
+
+connection.onclose(async () => {
+    await start();
+});
+
+start();
+
+connection.on("JobInfo", function (message) {
+    var li = document.createElement("li");
+    document.getElementById("messagesList").appendChild(li);
+    li.textContent = `${message}`;
+});
+

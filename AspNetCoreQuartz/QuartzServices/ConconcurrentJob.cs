@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using Quartz;
 using System.Threading.Tasks;
 
@@ -8,19 +9,28 @@ namespace AspNetCoreQuartz.QuartzServices
     {
         private readonly ILogger<ConconcurrentJob> _logger;
         private static int _counter = 0;
-        public ConconcurrentJob(ILogger<ConconcurrentJob> logger)
+        private readonly IHubContext<JobsHub> _hubContext;
+
+        public ConconcurrentJob(ILogger<ConconcurrentJob> logger, 
+            IHubContext<JobsHub> hubContext)
         {
             _logger = logger;
+            _hubContext = hubContext;
         }
 
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             var count = _counter++;
-            _logger.LogInformation($"Conconcurrent Job BEGIN {count} {DateTime.UtcNow}");
-            Thread.Sleep(7000);
-            _logger.LogInformation($"Conconcurrent Job END {count} {DateTime.UtcNow}");
 
-            return Task.CompletedTask;
+            var beginMessage = $"Conconcurrent Job BEGIN {count} {DateTime.UtcNow}";
+            await _hubContext.Clients.All.SendAsync("JobInfo", beginMessage);
+            _logger.LogInformation(beginMessage);
+
+            Thread.Sleep(7000);
+
+            var endMessage = $"Conconcurrent Job END {count} {DateTime.UtcNow}";
+            await _hubContext.Clients.All.SendAsync("JobInfo", endMessage);
+            _logger.LogInformation(endMessage);
         }
     }
 }
