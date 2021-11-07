@@ -2,6 +2,9 @@
 
 # ASP.NET Core scheduling with Quartz.NET
 
+Blogs
+
+[ASP.NET Core scheduling with Quartz.NET and SignalR monitoring](https://damienbod.com/)
 
 ## Links
 
