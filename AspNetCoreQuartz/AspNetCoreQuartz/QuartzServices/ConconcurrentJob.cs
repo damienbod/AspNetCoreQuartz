@@ -16,7 +16,11 @@ namespace AspNetCoreQuartz.QuartzServices
 
         public Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation($"Running Conconcurrent Job {_counter++}");
+            var count = _counter++;
+            _logger.LogInformation($"Conconcurrent Job BEGIN {count} {DateTime.UtcNow}");
+            Thread.Sleep(7);
+            _logger.LogInformation($"Conconcurrent Job END {count} {DateTime.UtcNow}");
+
             return Task.CompletedTask;
         }
     }

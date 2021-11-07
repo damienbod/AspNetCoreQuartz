@@ -9,19 +9,30 @@ builder.Services.AddQuartz(q =>
 {
     q.UseMicrosoftDependencyInjectionJobFactory();
 
+    //var conconcurrentJobKey = new JobKey("ConconcurrentJob");
+    //q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
+    //q.AddTrigger(opts => opts
+    //    .ForJob(conconcurrentJobKey)
+    //    .WithIdentity("ConconcurrentJob-trigger")
+    //    .WithCronSchedule("0/4 * * * * ?"));
+
     var conconcurrentJobKey = new JobKey("ConconcurrentJob");
     q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
     q.AddTrigger(opts => opts
-        .ForJob(conconcurrentJobKey) 
-        .WithIdentity("ConconcurrentJob-trigger") 
-        .WithCronSchedule("0/7 * * * * ?"));
+        .ForJob(conconcurrentJobKey)
+        .WithIdentity("ConconcurrentJob-trigger")
+        .WithSimpleSchedule(x => x
+            .WithIntervalInSeconds(5)
+            .RepeatForever()));
 
-    var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
-    q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
-    q.AddTrigger(opts => opts
-        .ForJob(nonConconcurrentJobKey)
-        .WithIdentity("NonConconcurrentJob-trigger")
-        .WithCronSchedule("0/15 * * * * ?"));
+
+
+    //var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
+    //q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
+    //q.AddTrigger(opts => opts
+    //    .ForJob(nonConconcurrentJobKey)
+    //    .WithIdentity("NonConconcurrentJob-trigger")
+    //    .WithCronSchedule("0/4 * * * * ?"));
 });
 
 builder.Services.AddQuartzHostedService(
