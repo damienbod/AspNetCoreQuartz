@@ -20,9 +20,15 @@ connection.onclose(async () => {
 
 start();
 
-connection.on("JobInfo", function (message) {
+connection.on("ConcurrentJobs", function (message) {
     var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
+    document.getElementById("concurrentJobs").appendChild(li);
+    li.textContent = `${message}`;
+});
+
+connection.on("NonConcurrentJobs", function (message) {
+    var li = document.createElement("li");
+    document.getElementById("nonConcurrentJobs").appendChild(li);
     li.textContent = `${message}`;
 });
 

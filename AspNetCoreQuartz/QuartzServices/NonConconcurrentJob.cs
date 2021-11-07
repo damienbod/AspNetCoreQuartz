@@ -24,13 +24,13 @@ namespace AspNetCoreQuartz.QuartzServices
             var count = _counter++;
 
             var beginMessage = $"NonConconcurrentJob Job BEGIN {count} {DateTime.UtcNow}";
-            await _hubContext.Clients.All.SendAsync("JobInfo", beginMessage);
+            await _hubContext.Clients.All.SendAsync("NonConcurrentJobs", beginMessage);
             _logger.LogInformation(beginMessage);
 
             Thread.Sleep(7000);
 
             var endMessage = $"NonConconcurrentJob Job END {count} {DateTime.UtcNow}";
-            await _hubContext.Clients.All.SendAsync("JobInfo", endMessage);
+            await _hubContext.Clients.All.SendAsync("NonConcurrentJobs", endMessage);
             _logger.LogInformation(endMessage);
         }
     }

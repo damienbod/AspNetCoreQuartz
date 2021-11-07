@@ -4,9 +4,14 @@ namespace AspNetCoreQuartz
 {
     public class JobsHub : Hub
     {
-        public Task SendMessage(string message)
+        public Task SendConcurrentJobsMessage(string message)
         {
-            return Clients.All.SendAsync("JobInfo",  message);
+            return Clients.All.SendAsync("ConcurrentJobs",  message);
+        }
+
+        public Task SendNonConcurrentJobsMessage(string message)
+        {
+            return Clients.All.SendAsync("NonConcurrentJobs", message);
         }
 
     }
