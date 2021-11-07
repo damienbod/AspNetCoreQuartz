@@ -9,4 +9,4 @@ https://www.quartz-scheduler.net/
 
 https://andrewlock.net/using-quartz-net-with-asp-net-core-and-worker-services/
 
-https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-6.0
+https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction
