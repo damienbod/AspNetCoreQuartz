@@ -1,7 +1,31 @@
+using AspNetCoreQuartz.QuartzServices;
+using Quartz;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+
+    var conconcurrentJobKey = new JobKey("ConconcurrentJob");
+    q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(conconcurrentJobKey) 
+        .WithIdentity("ConconcurrentJob-trigger") 
+        .WithCronSchedule("0/7 * * * * ?"));
+
+    var nonConconcurrentJobKey = new JobKey("NonConconcurrentJob");
+    q.AddJob<NonConconcurrentJob>(opts => opts.WithIdentity(nonConconcurrentJobKey));
+    q.AddTrigger(opts => opts
+        .ForJob(nonConconcurrentJobKey)
+        .WithIdentity("NonConconcurrentJob-trigger")
+        .WithCronSchedule("0/15 * * * * ?"));
+});
+
+builder.Services.AddQuartzHostedService(
+    q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
