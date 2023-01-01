@@ -2,9 +2,11 @@
 
 # ASP.NET Core scheduling with Quartz.NET
 
-Blogs
+## Blogs
 
 [ASP.NET Core scheduling with Quartz.NET and SignalR monitoring](https://damienbod.com/2021/11/08/asp-net-core-scheduling-with-quartz-net-and-signalr-monitoring/)
+
+## History
 
 2023-01-01 Update packages to .NET 7
 
