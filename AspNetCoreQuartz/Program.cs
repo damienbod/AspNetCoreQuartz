@@ -50,10 +50,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<JobsHub>("/jobshub");
-});
+app.MapHub<JobsHub>("/jobshub");
 
 app.MapRazorPages();
 
