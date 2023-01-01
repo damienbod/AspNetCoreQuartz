@@ -32,6 +32,3 @@ public class NonConconcurrentJob : IJob
         _logger.LogInformation("{endMessage}", endMessage);
     }
 }
-
-
-
