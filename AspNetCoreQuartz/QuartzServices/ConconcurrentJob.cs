@@ -9,7 +9,7 @@ public class ConconcurrentJob : IJob
     private static int _counter = 0;
     private readonly IHubContext<JobsHub> _hubContext;
 
-    public ConconcurrentJob(ILogger<ConconcurrentJob> logger, 
+    public ConconcurrentJob(ILogger<ConconcurrentJob> logger,
         IHubContext<JobsHub> hubContext)
     {
         _logger = logger;

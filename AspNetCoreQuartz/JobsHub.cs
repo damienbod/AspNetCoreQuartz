@@ -6,7 +6,7 @@ public class JobsHub : Hub
 {
     public Task SendConcurrentJobsMessage(string message)
     {
-        return Clients.All.SendAsync("ConcurrentJobs",  message);
+        return Clients.All.SendAsync("ConcurrentJobs", message);
     }
 
     public Task SendNonConcurrentJobsMessage(string message)
