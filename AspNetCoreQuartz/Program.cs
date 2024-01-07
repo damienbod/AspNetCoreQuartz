@@ -10,8 +10,6 @@ builder.Services.AddSignalR();
 
 builder.Services.AddQuartz(q =>
 {
-    q.UseMicrosoftDependencyInjectionJobFactory();
-
     var conconcurrentJobKey = new JobKey("ConconcurrentJob");
     q.AddJob<ConconcurrentJob>(opts => opts.WithIdentity(conconcurrentJobKey));
     q.AddTrigger(opts => opts
