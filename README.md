@@ -8,6 +8,7 @@
 
 ## History
 
+- 2024-10-06 Updated packages
 - 2024-06-22 Updated packages
 - 2024-01-07 .NET 8
 - 2023-11-03 Updated packages
