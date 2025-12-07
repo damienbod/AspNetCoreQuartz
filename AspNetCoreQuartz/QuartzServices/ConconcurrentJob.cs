@@ -20,13 +20,13 @@ public class ConconcurrentJob : IJob
     {
         var count = _counter++;
 
-        var beginMessage = $"Conconcurrent Job BEGIN {count} {DateTime.UtcNow}";
+        var beginMessage = $"Concurrent Job BEGIN {count} {DateTime.UtcNow}";
         await _hubContext.Clients.All.SendAsync("ConcurrentJobs", beginMessage);
         _logger.LogInformation("{beginMessage}", beginMessage);
 
         Thread.Sleep(7000);
 
-        var endMessage = $"Conconcurrent Job END {count} {DateTime.UtcNow}";
+        var endMessage = $"Concurrent Job END {count} {DateTime.UtcNow}";
         await _hubContext.Clients.All.SendAsync("ConcurrentJobs", endMessage);
         _logger.LogInformation("{endMessage}", endMessage);
     }
